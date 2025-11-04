@@ -12,3 +12,14 @@ public class EmployeeDto
 
 
 }
+public class CreateEmployeeDto
+{
+    public string EmployeeName { get; set; }
+    public string EmployeeEmail { get; set; }
+    public string EmployeePosition { get; set; }
+    public string EmployeeDepartment { get; set; }
+    public decimal EmployeeSalary { get; set; }
+    public DateTime EmployeeHireDate { get; set; }
+
+
+}
