@@ -4,9 +4,12 @@ namespace Employee_Management_System.Service.Apstraction;
 
 public interface IemployeeService
 {
-    List<EmployeeDto> GetAllEmployees();
+    Task<List<EmployeeDto>> GetAllEmployees(CancellationToken cancellationToken);
     EmployeeDto GetEmployeesById(int id);
-    EmployeeDto CreateEmployee(CreateEmployeeDto createEmployeeDto);
+    Task<EmployeeDto> CreateEmployee(CreateEmployeeDto createEmployeeDto);
+    Task<string> UpdateEmployees(UpdateEmployeeDto updateEmployeeDto);
+    Task<string> DeleteEmployee(int id);
+
 
 
 

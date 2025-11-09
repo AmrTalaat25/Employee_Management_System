@@ -10,41 +10,51 @@ namespace Employee_Management_System.Controllers;
 [ApiController]
 public class EmployeesController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+
     private readonly IemployeeService _service;
-    public EmployeesController(ApplicationDbContext context, IemployeeService servece )
+    public EmployeesController(IemployeeService servece )
     {
-        _context = context;
         _service = servece;
     }
-    // TO-DO service to get all employess
-    // TO-DO dto
 
-    [HttpGet]
-    public IActionResult GetAll()  
+
+    [HttpGet ("GetEmployees")]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)   
     {
-        var employees = _service.GetAllEmployees();
-                 if (employees is null || !employees.Any())
-        {
-            return NotFound("No Employees found in the database");
-        }
+        var employees = _service.GetAllEmployees(cancellationToken);
         return Ok(employees);
     }
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        var employees = _service.GetEmployeesById(id);
+        var employees = _service.GetEmployeesById(id);  // TODO try , catch  // async, await
         if (employees is null )
         {
-            return NotFound("There Is No Employee in the database");
+            return NotFound($"Not found Employee of # {id} in database");
         }
         return Ok(employees);
     }
-    [HttpPost]
-    public EmployeeDto Create(CreateEmployeeDto createEmployeeDto)
+
+    [HttpPost("Create Employee")]
+    public Task<EmployeeDto> Create(CreateEmployeeDto createEmployeeDto)
     {
         return _service.CreateEmployee(createEmployeeDto);
 
     }
+
+    [HttpPut("UpdateEmployees")]
+    public async Task<string> UpdateEmployees(UpdateEmployeeDto updateEmployeeDto)
+    {
+        return await _service.UpdateEmployees(updateEmployeeDto);
+    }
+    [HttpDelete]
+    public async Task<string> DeleteEmployee(int id)
+    {
+        return await _service.DeleteEmployee(id);
+    }
+
+
+
+
 
 }

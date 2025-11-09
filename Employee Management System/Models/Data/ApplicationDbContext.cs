@@ -7,12 +7,14 @@ namespace Employee_Management_System.Moduls.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+            Database.SetCommandTimeout(120);
         }
 
         public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             base.OnModelCreating(modelBuilder);
         }
     }
